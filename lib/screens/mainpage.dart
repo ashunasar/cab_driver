@@ -6,6 +6,8 @@ import 'package:cab_driver/tabs/ratings_tab.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MainPage extends StatefulWidget {
   static const String id = "mainpage";
