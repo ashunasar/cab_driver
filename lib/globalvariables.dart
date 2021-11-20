@@ -6,6 +6,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import 'datamodels/driver.dart';
+
 String mapKey = "AIzaSyArFilpAuSqF_Le1bR8qMsNEw0STjNIVXg";
 
 User currentFirebaseUser;
@@ -21,4 +23,10 @@ DatabaseReference tripRequestRef;
 
 StreamSubscription<Position> homeTabPositionStream;
 
+StreamSubscription<Position> ridePositionStream;
+
 final assetsAudioPlayer = AssetsAudioPlayer();
+
+DatabaseReference rideRef;
+
+Driver currentDriverInfo;

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cab_driver/brand_colors.dart';
+import 'package:cab_driver/datamodels/driver.dart';
 import 'package:cab_driver/globalvariables.dart';
 import 'package:cab_driver/helpers/push_notification_service.dart';
 import 'package:cab_driver/widgets/availability_button.dart';
@@ -89,7 +90,15 @@ class _HomeTabState extends State<HomeTab> {
 
   void getCurrentDriverInfo() async {
     currentFirebaseUser = FirebaseAuth.instance.currentUser;
+    DatabaseReference driverRef = FirebaseDatabase.instance
+        .reference()
+        .child('drivers/${currentFirebaseUser.uid}');
 
+    driverRef.once().then((DataSnapshot snapshot) {
+      if (snapshot.value != null) {
+        currentDriverInfo = Driver.fromSnapshot(snapshot);
+      }
+    });
     PushNotificationService pushNotificationService = PushNotificationService();
 
     pushNotificationService.initialize(context);

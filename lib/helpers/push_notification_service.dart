@@ -94,6 +94,9 @@ class PushNotificationService {
 
         String paymentMethod = snapshot.value['payment_method'];
 
+        String riderName = snapshot.value['rider_name'];
+        String riderPhone = snapshot.value['rider_phone'];
+
         // Logger().e(pickupAddress);
         print(pickupAddress);
 
@@ -104,6 +107,8 @@ class PushNotificationService {
         tripDetails.pickup = LatLng(pickupLat, pickupLng);
         tripDetails.destination = LatLng(destinationLat, destinationLng);
         tripDetails.paymentMethod = paymentMethod;
+        tripDetails.riderName = riderName;
+        tripDetails.riderPhone = riderPhone;
 
         showDialog(
             context: context,

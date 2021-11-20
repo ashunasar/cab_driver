@@ -1,12 +1,15 @@
 import 'package:cab_driver/brand_colors.dart';
 import 'package:cab_driver/datamodels/trip_details.dart';
 import 'package:cab_driver/globalvariables.dart';
+import 'package:cab_driver/helpers/helper_methods.dart';
 import 'package:cab_driver/screens/new_trip_page.dart';
 import 'package:cab_driver/widgets/brand_divider.dart';
 import 'package:cab_driver/widgets/progress_diolog.dart';
 import 'package:cab_driver/widgets/taxi_button.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:toast/toast.dart';
 
 class NotificationDialog extends StatelessWidget {
@@ -39,6 +42,8 @@ class NotificationDialog extends StatelessWidget {
 
       if (thisRideId == tripDetails.rideId) {
         newRideRef.set('accepted');
+
+        HelperMethods.disableHomeTabLocationUpdates();
 
         Navigator.push(
             context,
