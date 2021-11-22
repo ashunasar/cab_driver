@@ -5,18 +5,20 @@ class TripDetails {
   String pickupAddress;
   LatLng pickup;
   LatLng destination;
-  String rideId;
+  String rideID;
   String paymentMethod;
   String riderName;
   String riderPhone;
 
-  TripDetails(
-      {this.destinationAddress,
-      this.pickupAddress,
-      this.pickup,
-      this.destination,
-      this.rideId,
-      this.paymentMethod,
-      this.riderName,
-      this.riderPhone});
+  TripDetails({
+    this.pickupAddress,
+    this.rideID,
+    this.destinationAddress,
+    this.destination,
+    this.pickup,
+    this.paymentMethod,
+    this.riderName,
+    this.riderPhone
+  });
+
 }

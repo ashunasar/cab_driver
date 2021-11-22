@@ -1,42 +1,47 @@
-import 'package:cab_driver/helpers/helper_methods.dart';
-import 'package:cab_driver/widgets/brand_divider.dart';
-import 'package:cab_driver/widgets/taxi_button.dart';
+import 'package:cab_driver/helpers/helpermethods.dart';
 import 'package:flutter/material.dart';
 
 import '../brand_colors.dart';
+import 'BrandDivier.dart';
+import 'TaxiButton.dart';
 
 class CollectPayment extends StatelessWidget {
   final String paymentMethod;
   final int fares;
-  const CollectPayment({this.paymentMethod, this.fares});
+
+  CollectPayment({this.paymentMethod, this.fares});
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       backgroundColor: Colors.transparent,
       child: Container(
-        margin: EdgeInsets.all(4),
+        margin: EdgeInsets.all(4.0),
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(4),
-        ),
+            color: Colors.white, borderRadius: BorderRadius.circular(4)),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(height: 20),
+          children: <Widget>[
+            SizedBox(
+              height: 20,
+            ),
             Text('${paymentMethod.toUpperCase()} PAYMENT'),
-            SizedBox(height: 20),
+            SizedBox(
+              height: 20,
+            ),
             BrandDivider(),
-            SizedBox(height: 16),
+            SizedBox(
+              height: 16.0,
+            ),
             Text(
-              "\$$fares",
+              '\$$fares',
               style: TextStyle(fontFamily: 'Brand-Bold', fontSize: 50),
             ),
-            SizedBox(height: 16),
+            SizedBox(
+              height: 16,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
@@ -44,21 +49,25 @@ class CollectPayment extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            SizedBox(height: 30),
+            SizedBox(
+              height: 30,
+            ),
             Container(
               width: 230,
               child: TaxiButton(
-                title: paymentMethod == 'cash' ? 'COLLECT CASH' : 'CONFIRM',
+                title: (paymentMethod == 'cash') ? 'COLLECT CASH' : 'CONFIRM',
                 color: BrandColors.colorGreen,
                 onPressed: () {
                   Navigator.pop(context);
                   Navigator.pop(context);
 
-                  HelperMethods.enableHomeTabLocationUpdates();
+                  HelperMethods.enableHomTabLocationUpdates();
                 },
               ),
             ),
-            SizedBox(height: 40),
+            SizedBox(
+              height: 40,
+            )
           ],
         ),
       ),

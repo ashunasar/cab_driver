@@ -1,43 +1,38 @@
-import 'dart:io';
-
-import 'package:cab_driver/screens/mainpage.dart';
+import 'package:cab_driver/screens/registration.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'dart:io';
 
-import 'globalvariables.dart';
-import 'screens/login_page.dart';
-import 'screens/registratoin.dart';
-import 'screens/vehicle_info.dart';
+import 'package:provider/provider.dart';
+
+import 'dataprovider.dart';
+import 'globalvariabels.dart';
+import 'screens/login.dart';
+import 'screens/mainpage.dart';
+import 'screens/vehicleinfo.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  try {
-    await Firebase.initializeApp(
-      name: 'db2',
-      options: Platform.isIOS || Platform.isMacOS
-          ? FirebaseOptions(
-              appId: '1:501444260125:ios:87f317c7447d36951671f4',
-              apiKey: 'AIzaSyCScnflnC1gRe7saghj8WbaAbi9cWpkJ0E',
-              projectId: 'uber-clone-afa6a',
-              messagingSenderId: '501444260125',
-              databaseURL:
-                  'https://uber-clone-afa6a-default-rtdb.asia-southeast1.firebasedatabase.app',
-            )
-          : FirebaseOptions(
-              appId: '1:501444260125:android:df7856f9cd0d25861671f4',
-              apiKey: 'AIzaSyArFilpAuSqF_Le1bR8qMsNEw0STjNIVXg',
-              messagingSenderId: '501444260125',
-              projectId: 'uber-clone-afa6a',
-              databaseURL:
-                  'https://uber-clone-afa6a-default-rtdb.asia-southeast1.firebasedatabase.app',
-            ),
-    );
-  } catch (e) {
-    print(e);
-  }
+  final FirebaseApp app = await FirebaseApp.configure(
+    name: 'db2',
+    options: Platform.isIOS
+        ? const FirebaseOptions(
+            googleAppID: '1:501444260125:ios:87f317c7447d36951671f4',
+            gcmSenderID: '501444260125',
+            databaseURL:
+                'https://uber-clone-afa6a-default-rtdb.asia-southeast1.firebasedatabase.app',
+          )
+        : const FirebaseOptions(
+            googleAppID: '1:501444260125:android:df7856f9cd0d25861671f4',
+            apiKey: 'AIzaSyArFilpAuSqF_Le1bR8qMsNEw0STjNIVXg',
+            databaseURL:
+                'https://uber-clone-afa6a-default-rtdb.asia-southeast1.firebasedatabase.app',
+          ),
+  );
 
-  currentFirebaseUser = FirebaseAuth.instance.currentUser;
+  currentFirebaseUser = await FirebaseAuth.instance.currentUser();
+
   runApp(MyApp());
 }
 
@@ -45,20 +40,23 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        fontFamily: 'Brand-Regular',
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    return ChangeNotifierProvider(
+      create: (context) => AppData(),
+      child: MaterialApp(
+        theme: ThemeData(
+          fontFamily: 'Brand-Regular',
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        initialRoute:
+            (currentFirebaseUser == null) ? LoginPage.id : MainPage.id,
+        routes: {
+          MainPage.id: (context) => MainPage(),
+          RegistrationPage.id: (context) => RegistrationPage(),
+          VehicleInfoPage.id: (context) => VehicleInfoPage(),
+          LoginPage.id: (context) => LoginPage(),
+        },
       ),
-      initialRoute: currentFirebaseUser == null ? LoginPage.id : MainPage.id,
-      routes: {
-        MainPage.id: (context) => MainPage(),
-        RegistrationPage.id: (context) => RegistrationPage(),
-        VehicleInfo.id: (context) => VehicleInfo(),
-        LoginPage.id: (context) => LoginPage(),
-      },
     );
   }
 }
